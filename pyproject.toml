@@ -1,0 +1,29 @@
+[project]
+name = "personal-data-organizer"
+version = "0.1.0"
+description = "Pipeline to inventory, organize, deduplicate, and enrich personal files safely."
+authors = [
+    { name = "Fortino Romero Mantilla", email = "fortino.rom@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.13.2"
+
+# Main dependencies
+dependencies = [
+    "typer>=0.9,<1.0",
+    "pandas>=2.2,<3.0",
+    "python-magic>=0.4,<1.0",
+    "loguru>=0.7,<1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0,<9.0",
+    "ruff>=0.5,<1.0",
+    "mypy>=1.10,<2.0",
+    "pre-commit>=3.8,<4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
