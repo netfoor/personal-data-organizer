@@ -1,5 +1,6 @@
 setup:
-	uv sync
+	uv sync --all-extras
+	uv pip install -e .
 	uv run pre-commit install
 
 lint:
@@ -12,4 +13,4 @@ test:
 	uv run pytest -v
 
 run:
-	uv run pdo --help
+	uv run python -m personal_data_organizer.cli --help
