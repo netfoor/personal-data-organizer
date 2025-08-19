@@ -13,4 +13,4 @@ test:
 	uv run pytest -v
 
 run:
-	uv run python -m personal_data_organizer.cli --help
+	uv run python -m personal_data_organizer.cli ~\Downloads
