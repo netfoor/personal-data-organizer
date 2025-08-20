@@ -14,3 +14,5 @@ staging/
 # OS
 .DS_Store
 Thumbs.db
+.mypy_cache
+.ruff_cache

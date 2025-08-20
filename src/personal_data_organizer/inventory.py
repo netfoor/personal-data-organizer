@@ -5,6 +5,31 @@ import typer
 import pandas as pd
 import datetime as dt 
 
+
+CATEGORY_MAP = {
+    "images": [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".psd", ".bmp", ".webp", ".heic", ".cr2"],
+    "documents": [".pdf", ".docx", ".xlsx", ".pptx", ".txt", ".md", ".doc", ".rst", ".markdown", ".csv", ".ics", ".indd", ".idml"],
+    "audio": [".mp3", ".wav", ".ogg"],
+    "video": [".mp4", ".mov", ".avi", ".mkv"],
+    "archives": [".zip", ".rar", ".7z", ".tar", ".tar.gz", ".gz", ".iso", ".wpress"],
+    "code": [".py", ".js", ".ts", ".html", ".css", ".json", ".pyc", ".pyi", ".jsx", ".coffee", ".php", ".yml", ".yaml", ".xml", ".cfg", ".ini", ".lock", ".ipynb", ".drawio"],
+    "executables": [".exe", ".msi", ".dmg", ".dll", ".pyd", ".bat", ".ps1", ".cmd", ".vbs", ".sct"],
+    "web": [".htm", ".asp", ".xsl", ".map", ".mjs", ".cjs", ".cts", ".mts", ".jst"],
+    "fonts": [".eot", ".ttf", ".woff", ".woff2", ".otf"],
+    "development": [".pth", ".typed", ".pem", ".idl", ".tlb", ".h", ".lib", ".rc", ".def", ".pys", ".tmpl", ".bnf", ".closure-compiler", ".esprima", ".bsd", ".applescript", ".flow", ".node", ".iml", ".lst"],
+    "unknown": [".1", ".0", ".neon", ".dist", ".enc", ".docs"]
+}
+
+
+def guess_category(extension: str) -> str:
+    """Guess the category of a file based on its extension."""
+    extension = extension.lower()
+    for category, extensions in CATEGORY_MAP.items():
+        if extension in extensions:
+            return category
+    return "unknown"
+
+
 def _iter_files(root: Path) -> Iterator[Path]:  
     """Iterate over all files in a directory and its subdirectories."""
     if not root.exists():
@@ -63,7 +88,8 @@ def build_catalog_step2(root: Path, output: Path) -> None:
             "file": file.name,
             "extension": file.suffix.lower(),
             "size_bytes": stat.st_size,
-            "modified": dt.datetime.fromtimestamp(stat.st_mtime)
+            "modified": dt.datetime.fromtimestamp(stat.st_mtime),
+            "category": guess_category(file.suffix)
         })
 
     df = pd.DataFrame(rows)

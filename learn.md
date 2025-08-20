@@ -1,5 +1,1 @@
-What uv is and why is powerfull in python?
-
-uv is an extremely fast Python package & project manager that uses standard pyproject.toml (PEP 621). It does deps, virtual envs, a lockfile, runs commands, even manages Python versions
-
-
+Doc and learn in [https://www.notion.so/Personal-Data-Organizer-254a093b191c803c9f08de4e72e6720c?source=copy_link]
