@@ -14,3 +14,6 @@ test:
 
 run:
 	uv run python -m personal_data_organizer.cli ~\Downloads --output "C:\IA\personal-data-organizer\artifacts\downloads_enriched.csv"
+
+query:
+	uv run python -m querys.query
