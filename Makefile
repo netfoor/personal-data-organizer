@@ -13,4 +13,4 @@ test:
 	uv run pytest -v
 
 run:
-	uv run python -m personal_data_organizer.cli ~\Downloads
+	uv run python -m personal_data_organizer.cli ~\Downloads --output ../../artifacts/catalog.csv

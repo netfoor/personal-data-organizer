@@ -2,6 +2,8 @@ from pathlib import Path
 from typing import Iterator
 from loguru import logger
 import typer
+import pandas as pd
+import datetime as dt 
 
 def _iter_files(root: Path) -> Iterator[Path]:  
     """Iterate over all files in a directory and its subdirectories."""
@@ -44,3 +46,32 @@ def build_catalog_step1(root: Path) -> None:
             typer.echo(f"  - {s}")
     else:
         typer.echo("No files found.")
+
+def build_catalog_step2(root: Path, output: Path) -> None:
+    """Step 2: Build a catalog of files under the given root directory and save it to a CSV file."""
+    logger.info(f"Building catalog for files under: {root}")
+
+    root = root.expanduser().resolve()
+    output = output.expanduser().resolve()
+
+    rows = []
+
+    for file in _iter_files(root):
+        stat = file.stat()
+        rows.append({
+            "path": str(file),
+            "file": file.name,
+            "extension": file.suffix.lower(),
+            "size_bytes": stat.st_size,
+            "modified": dt.datetime.fromtimestamp(stat.st_mtime)
+        })
+
+    df = pd.DataFrame(rows)
+    logger.info(f"Found {len(df)} files under {root}")
+
+    if rows:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(output, index=False)
+        logger.info(f"Wrote catalog to {output}")
+    else:
+        logger.info("No files found.")
