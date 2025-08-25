@@ -13,7 +13,7 @@ test:
 	uv run pytest -v
 
 run:
-	uv run python -m personal_data_organizer.cli ~\Downloads --output "C:\IA\personal-data-organizer\artifacts\downloads_enriched.csv"
+	uv run python -m personal_data_organizer.cli -- enrich --input C:\IA\personal-data-organizer\artifacts\documents.csv --output C:\IA\personal-data-organizer\artifacts\pdfs_enriched.csv
 
 query:
 	uv run python -m querys.query
