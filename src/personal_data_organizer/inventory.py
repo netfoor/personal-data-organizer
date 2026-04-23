@@ -4,6 +4,7 @@ from loguru import logger
 import typer
 import pandas as pd
 import datetime as dt 
+from .path_utils import normalize_input_path
 
 
 CATEGORY_MAP = {
@@ -46,7 +47,7 @@ def build_catalog_step1(root: Path) -> None:
     """Step 1: Build a catalog of files under the given root directory."""
     logger.info(f"Building catalog for files under: {root}")
 
-    root = root.expanduser().resolve()
+    root = normalize_input_path(root).expanduser().resolve()
     
     if not root.exists():
         typer.secho(f"[error] Root does not exist: {root}", fg=typer.colors.RED, err=True)
@@ -76,8 +77,8 @@ def build_catalog_step2(root: Path, output: Path) -> None:
     """Step 2: Build a catalog of files under the given root directory and save it to a CSV file."""
     logger.info(f"Building catalog for files under: {root}")
 
-    root = root.expanduser().resolve()
-    output = output.expanduser().resolve()
+    root = normalize_input_path(root).expanduser().resolve()
+    output = normalize_input_path(output).expanduser().resolve()
 
     rows = []
 
